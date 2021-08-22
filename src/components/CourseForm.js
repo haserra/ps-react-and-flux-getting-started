@@ -1,0 +1,58 @@
+import React from "react";
+import TextInput from "./common/TextInput";
+import PropTypes from "prop-types";
+
+function CourseForm(props) {
+  return (
+    <form onSubmit={props.onSubmit}>
+      <TextInput
+        id="title"
+        label="Title"
+        onChange={props.onChange}
+        name="title" // set name to title because that corresponds to the property title on course object
+        value={props.course.title}
+        error={props.errors.title}
+      />
+      {
+        // Exercise: create a Select Input component, instead of the following markup so make it reusable
+      }
+      <div className="form-group">
+        <label htmlFor="author">Author</label>
+        <div className="field">
+          <select
+            id="author"
+            name="authorId"
+            onChange={props.onChange}
+            value={props.course.authorId || ""} // ! In React we declare the value of a select tag as a prop rather than selected the value attribute on the option -
+            className="form-control"
+          >
+            <option value="" />
+            <option value="1">Cory House</option>
+            <option value="2">Scott Allen</option>
+          </select>
+        </div>
+        {props.errors.authorId && (
+          <div className="alert alert-danger">{props.errors.authorId}</div>
+        )}
+      </div>
+      <TextInput
+        id="category"
+        label="Category"
+        name="category"
+        onChange={props.onChange}
+        value={props.course.category}
+        error={props.errors.category}
+      />
+      <input type="submit" value="Save" className="btn btn-primary" />
+    </form>
+  );
+}
+
+CourseForm.propTypes = {
+  course: PropTypes.object.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+};
+
+export default CourseForm;
